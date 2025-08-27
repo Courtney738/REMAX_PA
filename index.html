@@ -12,12 +12,19 @@
     <form id="listingForm">
       <label>Property Title: <input type="text" id="title" /></label>
       <label>Address: <input type="text" id="address" /></label>
-      <label>Price (ZAR): <input type="text" id="price" /></label>
+      <label>Price (ZAR): <input type="text" id="price" oninput="updateBondCalc()" /></label>
+      <label>Deposit %: <input type="number" id="deposit" value="10" oninput="updateBondCalc()" /></label>
+      <label>Interest Rate (%): <input type="number" id="interest" value="11.75" oninput="updateBondCalc()" /></label>
+      <label>Loan Term (Years): <input type="number" id="term" value="20" oninput="updateBondCalc()" /></label>
+      <div id="bondOutput"></div>
       <label>Bedrooms: <input type="number" id="bedrooms" /></label>
       <label>Bathrooms: <input type="number" id="bathrooms" /></label>
-      <label>Description:<textarea id="description"></textarea></label>
+      <label>Description:
+        <textarea id="description"></textarea>
+        <button type="button" onclick="polishDescription()">✨ Polish with GPT</button>
+      </label>
       <label>Upload Images: <input type="file" id="images" multiple /></label>
-<div id="imagePreview" class="preview-container"></div>
+      <div id="imagePreview" class="preview-container"></div>
       <button type="button" onclick="generateListing()">Generate</button>
     </form>
     <div id="output"></div>

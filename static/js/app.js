@@ -17,7 +17,6 @@ function generateListing() {
   `;
 }
 
-// === GP-ANCHOR: IMAGE_PREVIEW_START ===
 document.getElementById('images').addEventListener('change', function (event) {
   const preview = document.getElementById('imagePreview');
   preview.innerHTML = '';
@@ -32,4 +31,29 @@ document.getElementById('images').addEventListener('change', function (event) {
     reader.readAsDataURL(file);
   });
 });
-// === GP-ANCHOR: IMAGE_PREVIEW_END ===
+
+function updateBondCalc() {
+  const price = parseFloat(document.getElementById('price').value.replace(/[^0-9.]/g, ''));
+  const deposit = parseFloat(document.getElementById('deposit').value) / 100;
+  const rate = parseFloat(document.getElementById('interest').value) / 100 / 12;
+  const term = parseFloat(document.getElementById('term').value) * 12;
+  if (isNaN(price) || isNaN(rate) || isNaN(term)) return;
+
+  const loan = price * (1 - deposit);
+  const monthly = (loan * rate) / (1 - Math.pow(1 + rate, -term));
+  const output = document.getElementById('bondOutput');
+  output.innerText = `Estimated Monthly Repayment: R${monthly.toFixed(2)}`;
+}
+
+async function polishDescription() {
+  const description = document.getElementById('description').value;
+  const title = document.getElementById('title').value;
+  const address = document.getElementById('address').value;
+  const response = await fetch('/.netlify/functions/enhanceDescription', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, address, description })
+  });
+  const data = await response.json();
+  document.getElementById('description').value = data.result || '[Error enhancing description]';
+}

@@ -28,7 +28,6 @@ input, textarea {
   padding: 1rem;
   border-radius: 5px;
 }
-
 .preview-container {
   display: flex;
   gap: 0.5rem;
